@@ -21,8 +21,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-app.get('/', function(req,res) {
-	res.send('hello world')
+app.get('/', (req, res) => {
+	res.sendFile(__dirname + '/index.html');
 })
 
   app.get('/api/users/:associateId', function (req, res) {
