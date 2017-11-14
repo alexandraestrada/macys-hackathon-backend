@@ -63,9 +63,6 @@ app.get('/', function(req,res) {
 // app.get('/users/:associateId/questions', (req,res) => {
 // 	//get all questions view
 // })
-
-
-
 io.on('connection', (socket) => {
 	socket.emit('test', { hello: 'world'});
 
