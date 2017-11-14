@@ -9,7 +9,7 @@ const User = require('./models/user');
 const Question = require('./models/question');
 const Message = require('./models/message');
 
-app.set('port', (process.env.PORT || 5000));
+// app.set('port', (process.env.PORT || 5000));
 
 mongoose.connect('mongodb://localhost/macysHackathon');
 
@@ -105,6 +105,5 @@ io.on('connection', (socket) => {
 
 
 
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+var port = process.env.PORT || 3000;
+  app.listen(port);
