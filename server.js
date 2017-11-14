@@ -9,6 +9,8 @@ const User = require('./models/user');
 const Question = require('./models/question');
 const Message = require('./models/message');
 
+app.set('port', (process.env.PORT || 5000));
+
 mongoose.connect('mongodb://localhost/macysHackathon');
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -103,6 +105,6 @@ io.on('connection', (socket) => {
 
 
 
-server.listen(3000, () => {
-	console.log('listening on 3000')
-})
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
