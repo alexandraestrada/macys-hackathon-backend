@@ -1,6 +1,8 @@
-const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const userSchema =  new Schema({
   associateId: String,
   name: {
     first: String,
