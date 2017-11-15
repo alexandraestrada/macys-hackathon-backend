@@ -71,9 +71,10 @@ io.on('connection', (socket) => {
 		  text: data.message.text,
 		});
 
-		newMessage.save(function(err, message) {
+		newMessage.save()
+		.then(message => {
 			console.log('message', message);
-		})
+    	})
 	})
 
 	socket.on('newQuestion', function(data) {
@@ -83,7 +84,8 @@ io.on('connection', (socket) => {
 		  text: data.message.text,
 		});
 
-		newMessage.save(function(err, message) {
+		newMessage.save()
+		.then(message => {
 			console.log('message', message)
 			const newQuestion = new Question({
 			  	assigner: data.question.assigner,
@@ -93,10 +95,11 @@ io.on('connection', (socket) => {
 			  	messages: [message._id]
 	  		})
 	  		console.log('newQuestion', newQuestion);
-	  		newQuestion.save((err, question) => (
+	  		newQuestion.save().then(question => {
 	  			socket.emit('questionSubmitted', { question })
-	  		))
-		})
+
+	  		})
+    	})
 	})
 });
 
