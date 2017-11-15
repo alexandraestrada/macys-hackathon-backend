@@ -145,7 +145,7 @@ io.on('connection', (socket) => {
 	  		})
 	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save().then(question => {
-	  			socket.broadcast.emit('questionSubmitted', { question })
+	  			socket.emit('questionSubmitted', { question })
 
 	  		})
     	})
