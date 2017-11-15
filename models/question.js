@@ -12,6 +12,6 @@ const questionSchema = new Schema({
   },
   text: String,
   status: String
-}, { timestamp: true });
+}, { timestamps: { createdAt: 'created_at' } });
 
 module.exports = mongoose.model('Question', questionSchema);

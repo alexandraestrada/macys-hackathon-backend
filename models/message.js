@@ -10,7 +10,7 @@ const messageSchema = new Schema({
   },
   socketId: String,
   text: String,
-}, { timestamp: true });
+}, { timestamps: { createdAt: 'created_at' } });
 
 module.exports = mongoose.model('Message', messageSchema);
 
