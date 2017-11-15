@@ -39,6 +39,16 @@ app.get('/api/users/:associateId', function (req, res) {
   });
 });
 
+app.get('/api/questions/:question_id', (req, res) => {
+	const questionId = req.params.question_id;
+
+	Question.findOne({ '_id': questionId })
+		.populate('assignee')
+		.populate('assigner')
+		.populate('messages')
+		.then(questions => res.json(questions))
+})
+
 //   app.get('/questions/:id', (req,res) => {
 // 	//get question view
 // })
