@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
-  socketId: String,
   category: String,
   messages: [{ type: Schema.Types.ObjectId, ref: 'Message' }],
   assigner: {
