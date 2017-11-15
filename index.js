@@ -145,27 +145,46 @@ io.on('connection', (socket) => {
 	  		})
 	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save().then(questionResponse => {
-	  			io.emit('questionSubmitted', () => {
-	  				Question.findOne({'_id': questionResponse._id })
-	  						.populate('assignee')
-	  				.populate('assigner')
-	  				.populate('messages')
-	  				  .populate({ 
-	  				     path: 'messages',
-	  				     populate: {
-	  				       path: 'recipient',
-	  				       model: 'User'
-	  				     } 
-	  				  })
-	  				  .populate({ 
-	  				     path: 'messages',
-	  				     populate: {
-	  				       path: 'sender',
-	  				       model: 'User'
-	  				     } 
-	  				  })
-	  				  .then(question => { question })
-	  			})
+	  			Question.findOne({'_id': questionResponse._id })
+	  					.populate('assignee')
+	  			.populate('assigner')
+	  			.populate('messages')
+	  			  .populate({ 
+	  			     path: 'messages',
+	  			     populate: {
+	  			       path: 'recipient',
+	  			       model: 'User'
+	  			     } 
+	  			  })
+	  			  .populate({ 
+	  			     path: 'messages',
+	  			     populate: {
+	  			       path: 'sender',
+	  			       model: 'User'
+	  			     } 
+	  			  })
+	  			  .then(question => io.emit('questionSubmitted', { question }))
+	  			// io.emit('questionSubmitted', () => {
+	  				// Question.findOne({'_id': questionResponse._id })
+	  				// 		.populate('assignee')
+	  				// .populate('assigner')
+	  				// .populate('messages')
+	  				//   .populate({ 
+	  				//      path: 'messages',
+	  				//      populate: {
+	  				//        path: 'recipient',
+	  				//        model: 'User'
+	  				//      } 
+	  				//   })
+	  				//   .populate({ 
+	  				//      path: 'messages',
+	  				//      populate: {
+	  				//        path: 'sender',
+	  				//        model: 'User'
+	  				//      } 
+	  				//   })
+	  				//   .then(question => { question })
+	  			// })
 
 	  		})
     	})
