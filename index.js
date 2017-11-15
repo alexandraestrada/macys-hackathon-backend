@@ -46,6 +46,20 @@ app.get('/api/questions/:question_id', (req, res) => {
 		.populate('assignee')
 		.populate('assigner')
 		.populate('messages')
+		  .populate({ 
+		     path: 'messages',
+		     populate: {
+		       path: 'recipient',
+		       model: 'User'
+		     } 
+		  })
+		  .populate({ 
+		     path: 'messages',
+		     populate: {
+		       path: 'sender',
+		       model: 'User'
+		     } 
+		  })
 		.then(questions => res.json(questions))
 })
 
