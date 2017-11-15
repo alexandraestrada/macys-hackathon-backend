@@ -164,7 +164,7 @@ io.on('connection', (socket) => {
 	  				       model: 'User'
 	  				     } 
 	  				  })
-	  				  .then(question => return { question })
+	  				  .then(question => { question })
 	  			})
 
 	  		})
