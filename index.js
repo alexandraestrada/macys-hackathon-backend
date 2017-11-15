@@ -144,9 +144,9 @@ io.on('connection', (socket) => {
 			  	messages: [message._id]
 	  		})
 	  		console.log('newQuestion', newQuestion);
-	  		newQuestion.save().then(question => {
-	  			io.emit('questionSubmitted', question => {
-	  				Question.findOne({'_id': question._id })
+	  		newQuestion.save().then(questionResponse => {
+	  			io.emit('questionSubmitted', () => {
+	  				Question.findOne({'_id': questionResponse._id })
 	  						.populate('assignee')
 	  				.populate('assigner')
 	  				.populate('messages')
