@@ -145,7 +145,27 @@ io.on('connection', (socket) => {
 	  		})
 	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save().then(question => {
-	  			io.emit('questionSubmitted', { question })
+	  			io.emit('questionSubmitted', question => {
+	  				Question.findOne({'_id': question._id })
+	  						.populate('assignee')
+	  				.populate('assigner')
+	  				.populate('messages')
+	  				  .populate({ 
+	  				     path: 'messages',
+	  				     populate: {
+	  				       path: 'recipient',
+	  				       model: 'User'
+	  				     } 
+	  				  })
+	  				  .populate({ 
+	  				     path: 'messages',
+	  				     populate: {
+	  				       path: 'sender',
+	  				       model: 'User'
+	  				     } 
+	  				  })
+	  				  .then(question => res.json(question))
+	  			})
 
 	  		})
     	})
