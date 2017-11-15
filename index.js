@@ -78,21 +78,21 @@ io.on('connection', (socket) => {
 	})
 
 	socket.on('newQuestion', function(data) {
-  		const newMessage = new Message({
-		  sender: data.message.sender,
-		  recipient: data.message.recipient,
-		  text: data.message.text,
-		});
+  // 		const newMessage = new Message({
+		//   sender: data.message.sender,
+		//   recipient: data.message.recipient,
+		//   text: data.message.text,
+		// });
 
-		newMessage.save()
-		.then(message => {
-			console.log('message', message)
+		// newMessage.save()
+		// .then(message => {
+		// 	console.log('message', message)
 			const newQuestion = new Question({
-			  	assigner: '5a0bc81031955b7fc51baeeb',
-			  	assignee: '5a0bc7d431955b7fc51baeea',
-			  	text: 'I need a price override',
+			  	assigner: data.question.assigner,
+			  	assignee: data.question.assignee,
+			  	text: data.question.text,
 			  	category: data.question.category,
-			  	messages: ['5a0be55fd28dcb0014753f8b']
+			  	// messages: [message._id]
 	  		})
 	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save().then(question => {
