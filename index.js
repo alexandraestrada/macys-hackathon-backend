@@ -88,11 +88,11 @@ io.on('connection', (socket) => {
 		.then(message => {
 			console.log('message', message)
 			const newQuestion = new Question({
-			  	assigner: data.question.assigner,
-			  	assignee: data.question.assignee,
-			  	text: data.question.text,
+			  	assigner: '5a0bc81031955b7fc51baeeb',
+			  	assignee: '5a0bc7d431955b7fc51baeea',
+			  	text: 'I need a price override',
 			  	category: data.question.category,
-			  	messages: [message._id]
+			  	messages: ['5a0be55fd28dcb0014753f8b']
 	  		})
 	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save().then(question => {
