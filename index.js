@@ -121,7 +121,6 @@ io.on('connection', (socket) => {
 
 		newMessage.save()
 		  .then(message => {
-			console.log('message', message)
 		     if (data.questionId)
 		     Question.findOneAndUpdate({ '_id': data.questionId, <do update stuff here>})
 		      .then(question => io.emit('newMessageAdded', { question })
