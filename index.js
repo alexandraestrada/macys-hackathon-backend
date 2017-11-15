@@ -90,8 +90,9 @@ io.on('connection', (socket) => {
 			  	assignee: data.question.assignee,
 			  	text: data.question.text,
 			  	category: data.question.category,
-			  	messages: [message._id],
+			  	messages: [message._id]
 	  		})
+	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save((err, question) => (
 	  			socket.emit('questionSubmitted', { question })
 	  		))
