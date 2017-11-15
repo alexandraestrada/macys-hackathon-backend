@@ -17,31 +17,27 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST');
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
 app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html');
-})
+});
 
-  app.get('/api/users/:associateId', function (req, res) {
-     
-     var userId = req.params.associateId;
-    User.find({'associateId': userId }, function(err, doc) {
-    	if (err) {
-    		console.log(err);
-    	}
-    	else {
-    		console.log('data is:', doc)
-    		res.send(doc)
-    	}
-    })
-  
+app.get('/api/users/:associateId', function (req, res) {
+	const userId = req.params.associateId;
 
+	User.find({ 'associateId': userId }, function(err, doc) {
+  	if (err) console.log(err);
+
+		console.log('data is:', doc)
+		res.json(doc)
   });
+});
 
 //   app.get('/questions/:id', (req,res) => {
 // 	//get question view
@@ -101,9 +97,7 @@ io.on('connection', (socket) => {
 	  		))
 		})
 	})
-}) 
-
-
+});
 
 var port = process.env.PORT || 3000;
-  app.listen(port);
+app.listen(port);
