@@ -63,6 +63,30 @@ app.get('/api/questions/:question_id', (req, res) => {
 		.then(questions => res.json(questions))
 })
 
+app.get('/api/users/:user_id/questions', (req, res) => {
+	const userId = req.params.user_id;
+
+	Question.find({ assignee: userId })
+				.populate('assignee')
+		.populate('assigner')
+		.populate('messages')
+		  .populate({ 
+		     path: 'messages',
+		     populate: {
+		       path: 'recipient',
+		       model: 'User'
+		     } 
+		  })
+		  .populate({ 
+		     path: 'messages',
+		     populate: {
+		       path: 'sender',
+		       model: 'User'
+		     } 
+		  })
+		  .then(questions => res.json(questions))
+})
+
 //   app.get('/questions/:id', (req,res) => {
 // 	//get question view
 // })
