@@ -78,28 +78,29 @@ io.on('connection', (socket) => {
 	})
 
 	socket.on('newQuestion', function(data) {
-  // 		const newMessage = new Message({
-		//   sender: data.message.sender,
-		//   recipient: data.message.recipient,
-		//   text: data.message.text,
-		// });
+  		const newMessage = new Message({
+		  sender: data.message.sender,
+		  recipient: data.message.recipient,
+		  text: data.message.text,
+		});
 
-		// newMessage.save()
-		// .then(message => {
-		// 	console.log('message', message)
+		newMessage.save()
+		.then(message => {
+			console.log('message', message)
 			const newQuestion = new Question({
 			  	assigner: data.question.assigner,
 			  	assignee: data.question.assignee,
 			  	text: data.question.text,
 			  	category: data.question.category,
-			  	// messages: [message._id]
+			  	status: data.question.status,
+			  	messages: [message._id]
 	  		})
 	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save().then(question => {
 	  			socket.emit('questionSubmitted', { question })
 
 	  		})
-    	// })
+    	})
 	})
 });
 
