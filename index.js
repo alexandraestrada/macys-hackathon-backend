@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
 	  			socket.emit('questionSubmitted', { question })
 
 	  		})
-    	})
+    	// })
 	})
 });
 
