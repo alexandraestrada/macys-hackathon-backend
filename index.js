@@ -11,7 +11,7 @@ const Message = require('./models/message');
 
 // app.set('port', (process.env.PORT || 5000));
 
-mongoose.connect('mongodb://localhost/macysHackathon');
+mongoose.connect('mongodb://testuser:testing@ds021681.mlab.com:21681/hackathon-db');
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
