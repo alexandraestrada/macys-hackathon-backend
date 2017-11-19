@@ -126,7 +126,7 @@ io.on('connection', (socket) => {
 			Question.findOneAndUpdate(
 				{'_id': data.questionId }, 
 				{ $push: { messages: message._id } },
-				(error) => {
+				(error, question) => {
 					if (error) console.log('Update question error', error)
 					console.log('Update question success', question);
 				}
