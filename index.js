@@ -121,18 +121,34 @@ io.on('connection', (socket) => {
 
 		newMessage.save()
 		.then(message => {
-			console.log('data.questionId from request', data.questionId);
-
 			Question.findOneAndUpdate(
 				{'_id': data.questionId }, 
-				{ $push: { messages: message._id } },
-				(error, question) => {
-					if (error) console.log('Update question error', error)
-					console.log('Update question success', question);
-				}
+				{ $push: { messages: message._id } }
 			)
-			console.log('message', message);
+			.populate('assignee')
+			.populate('assigner')
+			.populate('messages')
+			  .populate({ 
+			     path: 'messages',
+			     populate: {
+			       path: 'recipient',
+			       model: 'User'
+			     } 
+			  })
+			  .populate({ 
+			     path: 'messages',
+			     populate: {
+			       path: 'sender',
+			       model: 'User'
+			     } 
+			  })
+			  .exec((err, question) => {
+			  	if (err) console.log('Update question err', err);
+			  	io.emit('questionUpdated', { question });
+			  })
+
     	})
+
 	})
 
 	socket.on('newQuestion', function(data) {
