@@ -121,6 +121,13 @@ io.on('connection', (socket) => {
 
 		newMessage.save()
 		.then(message => {
+			console.log('data.questionId from request', data.questionId);
+			Question.findOneAndUpdate(
+				{'_id': data.questionId }, 
+				{ $push: { messages: message._id } },
+			)
+			.then(question => console.log('Update question success', question))
+			.catch(err => console.log('Update question error', err))
 			console.log('message', message);
     	})
 	})
@@ -146,7 +153,7 @@ io.on('connection', (socket) => {
 	  		console.log('newQuestion', newQuestion);
 	  		newQuestion.save().then(questionResponse => {
 	  			Question.findOne({'_id': questionResponse._id })
-	  					.populate('assignee')
+	  			.populate('assignee')
 	  			.populate('assigner')
 	  			.populate('messages')
 	  			  .populate({ 
@@ -164,27 +171,6 @@ io.on('connection', (socket) => {
 	  			     } 
 	  			  })
 	  			  .then(question => io.emit('questionSubmitted', { question }))
-	  			// io.emit('questionSubmitted', () => {
-	  				// Question.findOne({'_id': questionResponse._id })
-	  				// 		.populate('assignee')
-	  				// .populate('assigner')
-	  				// .populate('messages')
-	  				//   .populate({ 
-	  				//      path: 'messages',
-	  				//      populate: {
-	  				//        path: 'recipient',
-	  				//        model: 'User'
-	  				//      } 
-	  				//   })
-	  				//   .populate({ 
-	  				//      path: 'messages',
-	  				//      populate: {
-	  				//        path: 'sender',
-	  				//        model: 'User'
-	  				//      } 
-	  				//   })
-	  				//   .then(question => { question })
-	  			// })
 
 	  		})
     	})
