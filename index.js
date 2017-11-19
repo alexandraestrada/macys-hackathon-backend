@@ -144,6 +144,7 @@ io.on('connection', (socket) => {
 			  })
 			  .exec((err, question) => {
 			  	if (err) console.log('Update question err', err);
+			  	console.log('Updated question', question);
 			  	io.emit('questionUpdated', { question });
 			  })
 
