@@ -122,12 +122,15 @@ io.on('connection', (socket) => {
 		newMessage.save()
 		.then(message => {
 			console.log('data.questionId from request', data.questionId);
+
 			Question.findOneAndUpdate(
 				{'_id': data.questionId }, 
 				{ $push: { messages: message._id } },
+				(error) => {
+					if (error) console.log('Update question error', error)
+					console.log('Update question success', question);
+				}
 			)
-			.then(question => console.log('Update question success', question))
-			.catch(err => console.log('Update question error', err))
 			console.log('message', message);
     	})
 	})
