@@ -122,8 +122,9 @@ io.on('connection', (socket) => {
 		newMessage.save()
 		.then(message => {
 			Question.findOneAndUpdate(
-				{'_id': data.questionId }, 
-				{ $push: { messages: message._id } }
+				{ '_id': data.questionId }, 
+				{ $push: { messages: message._id } },
+				{ new: true }
 			)
 			.populate('assignee')
 			.populate('assigner')
@@ -144,7 +145,6 @@ io.on('connection', (socket) => {
 			  })
 			  .exec((err, question) => {
 			  	if (err) console.log('Update question err', err);
-			  	console.log('Updated question', question);
 			  	io.emit('questionUpdated', { question });
 			  })
 
