@@ -63,28 +63,29 @@ app.get('/api/questions/:question_id', (req, res) => {
 		.then(questions => res.json(questions))
 })
 
-app.get('/api/users/:user_id/questions', (req, res) => {
+app.get('/api/users/:user_id/questions/:user_type', (req, res) => {
 	const userId = req.params.user_id;
+	const userType = req.params.user_type;
 
-	Question.find({ assignee: userId })
-				.populate('assignee')
+	Question.find({ userType: userId })
+		.populate('assignee')
 		.populate('assigner')
 		.populate('messages')
-		  .populate({ 
-		     path: 'messages',
-		     populate: {
-		       path: 'recipient',
-		       model: 'User'
-		     } 
-		  })
-		  .populate({ 
-		     path: 'messages',
-		     populate: {
-		       path: 'sender',
-		       model: 'User'
-		     } 
-		  })
-		  .then(questions => res.json(questions))
+	  .populate({ 
+	     path: 'messages',
+	     populate: {
+	       path: 'recipient',
+	       model: 'User'
+	     } 
+	  })
+	  .populate({ 
+	     path: 'messages',
+	     populate: {
+	       path: 'sender',
+	       model: 'User'
+	     } 
+	  })
+	  .then(questions => res.json(questions))
 })
 
 //   app.get('/questions/:id', (req,res) => {
@@ -141,7 +142,7 @@ io.on('connection', (socket) => {
 			     populate: {
 			       path: 'sender',
 			       model: 'User'
-			     } 
+			     }
 			  })
 			  .exec((err, question) => {
 			  	if (err) console.log('Update question err', err);
