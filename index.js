@@ -67,7 +67,7 @@ app.get('/api/users/:user_id/questions/:user_type', (req, res) => {
 	const userId = req.params.user_id;
 	const userType = req.params.user_type;
 
-	Question.find({ userType: userId })
+	Question.find({ [userType]: userId })
 		.populate('assignee')
 		.populate('assigner')
 		.populate('messages')
